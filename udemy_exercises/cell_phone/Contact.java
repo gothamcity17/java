@@ -22,7 +22,6 @@ class Contact {
     }
 }
 
-
 /*
     - **Contact Class:**
         - Name

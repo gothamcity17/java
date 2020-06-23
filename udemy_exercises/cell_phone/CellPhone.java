@@ -5,9 +5,9 @@ class CellPhone {
     private String myNumber;
     private ArrayList<Contact> myContacts;
     private static Scanner scanner = new Scanner(System.in);
-    private static CellPhone cellPhone = new CellPhone("972-639-7694");
+    private static CellPhone cellPhone = new CellPhone("972 639 7694");
 
-    public CellPhone (String myNumber) {
+    public CellPhone(String myNumber) {
         this.myNumber = myNumber;
         this.myContacts = new ArrayList<Contact>();
     }
@@ -24,7 +24,7 @@ class CellPhone {
     public boolean updateContact(Contact oldContact, Contact newContact) {
         int foundPosition = findContact(oldContact);
         if(foundPosition <0) {
-            System.out.println(oldContact.getName() +", was not found.");
+            System.out.println(oldContact.getName() + ", was not found.");
             return false;
         } else if(findContact(newContact.getName()) != -1) {
             System.out.println("Contact with name " + newContact.getName() + " already exists.");
@@ -79,7 +79,8 @@ class CellPhone {
     public void showContacts() {
         System.out.println("Contact List");
         for(int i=0; i<this.myContacts.size(); i++) {
-            System.out.println((i+1) + "." + this.myContacts.get(i).getName() + " -> " + this.myContacts.get(i).getPhoneNumber());
+            System.out.println((i+1) + "." + this.myContacts.get(i).getName() + " -> " +
+                    this.myContacts.get(i).getPhoneNumber());
         }
     }
 
