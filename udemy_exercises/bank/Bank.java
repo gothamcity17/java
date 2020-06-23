@@ -1,7 +1,128 @@
 package udemy_exercises.bank;
+import java.util.ArrayList
 
 public class Bank {
-    
+    private String name;
+    private ArrayList<Branch> branches;
+
+    public Bank(String name) {
+        this.name = name;
+        this.branches = newArrayList<Branch>();
+    }
+
+    public boolean addBranch(String branchName) {
+        if(findBranch(branchName) == null) {
+            this.branches.add(new Branch(branchName));
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addCustomer(String branchName, String customerName, double initialAmount) {
+        Branch branch = findBranch(branchName);
+        if(branch != null) {
+            return branch.newCustomer(customerName, initialAmount);
+        }
+        return false;
+    }
+
+    public boolean addCustomerTransaction(String branchName, String customerName, double amount) {
+        Branch branch = findBranch(branchName);
+        if(branch != null) {
+            return branch.addCustomerTransaction(customerName, amount);
+        }
+        return false;
+    }
+
+    private Branch findBranch(String branchName) {
+        for(int i=0; i<this.branches.size(); i++) {
+            Branch checkedBranch = this.branches.get(i);
+            if(checkedBranch.getName().equals(branchName)) {
+                return checkedBranch;
+            }
+        }
+        return null;
+    }
+
+    public boolean listCustomers(String branchName, boolean showTransactions) {
+        Branch branch = findBranch(branchName);
+        if(branch != null) {
+            System.out.println("Customer details for branch " + branch.getName());
+
+            ArrayList<Customer> branchCustomers = branch.getCustomers();
+            for(int i=0; i<branchCustomers.size(); i++) {
+                Customer branchCustomer = branchCustomers.get(i);
+                System.out.println("Customer: " + branchCustomer.getName() + "[" + (i+1) + "]");
+                if(showTransactions) {
+                    System.out.println("Transactions");
+                    ArrayList<Double> transactions = branchCustomer.getTransactions();
+                    for(int j=0; j<transactions.size(); j++) {
+                        System.out.println("[" + (j+1) + "]  Amount "  + transactions.get(j));
+                    }
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Bank bank = new Bank("Bank of America");
+
+        if(bank.addBranch("Dallas")) {
+            System.out.println("Dallas branch created");
+        }
+
+        if(bank.addBranch("Austin")) {
+            System.out.println("Austin branch created");
+        }
+
+        if(bank.addBranch("Houston")) {
+            System.out.println("Houston branch created");
+        }
+
+        bank.addCustomer("Dallas", "Gowtham", 100.25);
+        bank.addCustomer("Dallas", "Carlos", 200.50);
+        bank.addCustomer("Dallas", "Michael", 300.75);
+
+        bank.addBranch("Austin");
+        bank.addCustomer("Austin", "Justin", 400.25);
+
+        bank.addCustomerTransaction("Dallas", "Gowtham", 50.25);
+        bank.addCustomerTransaction("Dallas", "Gowtham", 80.75);
+        bank.addCustomerTransaction("Dallas", "Carlos", 70.50);
+
+        bank.listCustomers("Dallas", true);
+        bank.listCustomers("Austin", true);
+
+        bank.addBranch("Houston");
+
+        if(!bank.addCustomer("Houston", "Alec", 600.50)) {
+            System.out.println("Error, Houston branch does not exist.");
+        }
+
+        if(!bank.addBranch("Dallas")) {
+            System.out.println("Dallas, branch already exists.");
+        }
+
+        if(!bank.addBranch("Austin")) {
+            System.out.println("Austin, branch already exists.");
+        }
+
+        if(!bank.addBranch("Houston")) {
+            System.out.println("Houston, branch already exists.");
+        }
+
+        if(!bank.addCustomerTransaction("Dallas", "John", 65.50)) {
+            System.out.println("Customer does not exist at branch");
+        }
+
+        if(!bank.addCustomer("Dallas", "Gowtham", 120.75)) {
+            System.out.println("Customer Gowtham already exists");
+        }
+    }
 }
 
 
